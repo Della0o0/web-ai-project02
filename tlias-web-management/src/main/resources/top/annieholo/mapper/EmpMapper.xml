@@ -3,6 +3,46 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.annieholo.mapper.EmpMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time)
+        values (#{username}, #{name}, #{gender},#{phone}, #{job},#{salary},#{image}, #{entryDate}, #{deptId},#{createTime},#{updateTime} )
+    </insert>
+    <update id="delete" >
+        update emp set deleted = 1 where id in
+            <foreach collection="ids" item="id" open="(" separator=","  close=")">
+                #{id}
+            </foreach>
+    </update>
+    <update id="update">
+        update emp
+        <set>
+<!--            适用于-->
+            <if test="username != null and username != ''">username = #{username},</if>
+<!--            username = #{username},-->
+            name = #{name},
+            gender = #{gender},
+            phone = #{phone},
+            job = #{job},
+            salary = #{salary},
+            image = #{image},
+            entry_date = #{entryDate},
+            dept_id = #{deptId},
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="realDelete">
+        delete from emp where id in
+        <foreach collection="ids" item="id" open="(" separator=","  close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteExpByEmpId">
+        delete from emp_expr where emp_id in
+        <foreach collection="ids" item="id" open="(" separator=","  close=")">
+            #{id}
+        </foreach>
+    </delete>
     <select id="list" resultType="top.annieholo.pojo.Emp">
         select e.*, d.name dept_name from emp e left join dept d on e.dept_id = d.id
         <where>
@@ -16,7 +56,14 @@
                 and e.entry_date between #{begin} and #{end}
             </if>
         </where>
-
+        where deleted = 0
         order by update_time desc
     </select>
+    <select id="getById" resultType="top.annieholo.pojo.Emp">
+        select * from emp where id = #{id}
+    </select>
+    <select id="getExpById" resultType="top.annieholo.pojo.EmpExpr">
+        select * from emp_expr where emp_id = #{emp_id}
+    </select>
+
 </mapper>

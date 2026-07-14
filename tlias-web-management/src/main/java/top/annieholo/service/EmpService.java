@@ -1,11 +1,9 @@
 package top.annieholo.service;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import top.annieholo.pojo.Emp;
 import top.annieholo.pojo.EmpQueryParam;
 import top.annieholo.pojo.PageResult;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface EmpService {
@@ -19,4 +17,14 @@ public interface EmpService {
     // );
 
     PageResult<Emp> page(EmpQueryParam empQueryParam);
+
+    void save(Emp emp);
+
+    void delete(List<Integer> ids);
+
+    void realDelete(List<Integer> ids);
+
+    Emp getById(Integer id);
+
+    void update(Emp emp);
 }

@@ -3,10 +3,8 @@ package top.annieholo.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import top.annieholo.pojo.Emp;
 import top.annieholo.pojo.EmpQueryParam;
 import top.annieholo.pojo.PageResult;
@@ -51,6 +49,45 @@ public class EmpController {
         log.info("分页查询参数：{}", empQueryParam);
         PageResult<Emp> pageResult = empService.page(empQueryParam);
         return Result.success(pageResult);
+    }
+
+    /**
+     * 新增员工
+     * @param emp
+     * @return
+     */
+    @PostMapping
+    public Result save(@RequestBody Emp emp){
+        // 新增员工信息
+        log.info("新增参数：{}", emp);
+        empService.save(emp);
+        return Result.success();
+    }
+
+    /**
+     * 删除员工，逻辑删除
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    public Result delete(@RequestParam List<Integer> ids){
+        // empService.delete(ids);
+        empService.realDelete(ids);
+        return Result.success();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @GetMapping("/{id}")
+    public Result get(@PathVariable Integer id){
+        // 获取员工基本信息
+        Emp emp = empService.getById(id);
+        return Result.success(emp);
+    }
+
+    @PutMapping
+    public Result update(@RequestBody Emp emp){
+        empService.update(emp);
+        return Result.success();
     }
 
 }

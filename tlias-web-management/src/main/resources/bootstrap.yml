@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: tlias-web-management
+  cloud:
+    nacos:
+      server-addr: 43.172.94.87:8848
+      username: nacos
+      password: nacos
+      config:
+        file-extension: yml
+        group: DEFAULT_GROUP

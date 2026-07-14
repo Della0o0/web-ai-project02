@@ -1,5 +1,6 @@
 package top.annieholo.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -19,9 +20,14 @@ public class Emp {
     private String image; //头像
     private LocalDate entryDate; //入职日期
     private Integer deptId; //关联的部门ID
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime; //创建时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime; //修改时间
+    private Integer deleted; // 是否删除
 
 
     private String deptName; // 封装用户部门名称
+
+    private List<EmpExpr> exprList; // 工作经历
 }

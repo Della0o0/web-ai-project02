@@ -2,13 +2,20 @@
 spring:
   application:
     name: tlias-web-management
-  #数据库的链接信息
-  datasource:
-#    type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/tlias
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: '123456'
+  config:
+    import: optional:nacos:tlias-web-management.yml
+  cloud:
+    nacos:
+      server-addr: 43.172.94.87:8848
+      username: nacos
+      password: nacos
+      config:
+        file-extension: yml
+        group: DEFAULT_GROUP
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 #Mybatis的配置信息
 mybatis:
@@ -16,3 +23,9 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml // 同包同名不需要
+
+#logging的配置信息
+logging:
+  level:
+    #事务管理日志级别
+    org.springframework.jdbc.support.JdbcTransactionManager: debug

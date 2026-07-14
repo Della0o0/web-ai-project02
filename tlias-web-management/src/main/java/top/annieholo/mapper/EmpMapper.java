@@ -1,12 +1,10 @@
 package top.annieholo.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.format.annotation.DateTimeFormat;
 import top.annieholo.pojo.Emp;
+import top.annieholo.pojo.EmpExpr;
 import top.annieholo.pojo.EmpQueryParam;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -51,4 +49,27 @@ public interface EmpMapper {
     // );
 
     List<Emp> list(EmpQueryParam empQueryParam);
+
+    /**
+     * 新增员工基本信息
+     * @param emp
+     */
+    // @Options(useGeneratedKeys = true, keyProperty = "id")
+    void insert(Emp emp);
+
+    /**
+     * 删除员工
+     * @param ids
+     */
+    void delete(List<Integer> ids);
+
+    void realDelete(List<Integer> ids);
+
+    void deleteExpByEmpId(List<Integer> ids);
+
+    Emp getById(Integer id);
+
+    List<EmpExpr> getExpById(Integer emp_id);
+
+    void update(Emp emp);
 }
