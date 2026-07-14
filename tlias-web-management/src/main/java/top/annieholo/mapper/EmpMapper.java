@@ -4,8 +4,10 @@ import org.apache.ibatis.annotations.Mapper;
 import top.annieholo.pojo.Emp;
 import top.annieholo.pojo.EmpExpr;
 import top.annieholo.pojo.EmpQueryParam;
+import top.annieholo.pojo.JobCount;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 员工信息
@@ -72,4 +74,6 @@ public interface EmpMapper {
     List<EmpExpr> getExpById(Integer emp_id);
 
     void update(Emp emp);
+
+    List<JobCount> countEmpJobData();
 }

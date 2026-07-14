@@ -65,5 +65,17 @@
     <select id="getExpById" resultType="top.annieholo.pojo.EmpExpr">
         select * from emp_expr where emp_id = #{emp_id}
     </select>
+    <select id="countEmpJobData" resultType="top.annieholo.pojo.JobCount">
+        select
+            (case job
+                 when 1 then '班主任'
+                 when 2 then '讲师'
+                 when 3 then '学工主管'
+                 when 4 then '教研主管'
+                 when 5 then '咨询师'
+                 else '其他' end) job_name,
+            count(*) emp_count
+        from emp where emp.deleted = 0 group by job order by emp_count;
+    </select>
 
 </mapper>

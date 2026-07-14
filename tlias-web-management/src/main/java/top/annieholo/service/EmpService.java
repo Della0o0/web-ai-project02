@@ -2,6 +2,7 @@ package top.annieholo.service;
 
 import top.annieholo.pojo.Emp;
 import top.annieholo.pojo.EmpQueryParam;
+import top.annieholo.pojo.JobOption;
 import top.annieholo.pojo.PageResult;
 
 import java.util.List;
@@ -27,4 +28,5 @@ public interface EmpService {
     Emp getById(Integer id);
 
     void update(Emp emp);
+
 }
