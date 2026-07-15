@@ -78,4 +78,22 @@
         from emp where emp.deleted = 0 group by job order by emp_count;
     </select>
 
+    <select id="countEmpJobDataBar" resultType="top.annieholo.pojo.BarItem">
+        select
+            (case job
+                 when 1 then '班主任'
+                 when 2 then '讲师'
+                 when 3 then '学工主管'
+                 when 4 then '教研主管'
+                 when 5 then '咨询师'
+                 else '其他' end) name,
+            count(*) value
+        from emp where emp.deleted = 0 group by job order by value;
+    </select>
+    <select id="countEmpGenderData" resultType="top.annieholo.pojo.GenderCount">
+        select if(gender = 1 , '男', '女') name,
+            count(*) value
+        from emp where emp.deleted = 0 group by gender;
+    </select>
+
 </mapper>

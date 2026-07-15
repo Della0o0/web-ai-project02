@@ -1,10 +1,7 @@
 package top.annieholo.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import top.annieholo.pojo.Emp;
-import top.annieholo.pojo.EmpExpr;
-import top.annieholo.pojo.EmpQueryParam;
-import top.annieholo.pojo.JobCount;
+import top.annieholo.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -76,4 +73,8 @@ public interface EmpMapper {
     void update(Emp emp);
 
     List<JobCount> countEmpJobData();
+
+    List<BarItem> countEmpJobDataBar();
+
+    List<GenderCount> countEmpGenderData();
 }
