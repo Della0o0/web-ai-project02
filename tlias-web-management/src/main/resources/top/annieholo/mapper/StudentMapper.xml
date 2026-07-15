@@ -70,4 +70,32 @@
         left join clazz c on s.clazz_id = c.id
         where s.id = #{id}
     </select>
+
+    <select id="countStudentDegreeData" resultType="top.annieholo.pojo.BarItem">
+        select
+            (case degree
+                 when 1 then '初中'
+                 when 2 then '高中'
+                 when 3 then '大专'
+                 when 4 then '本科'
+                 when 5 then '硕士'
+                 when 6 then '博士'
+                 else '其他' end) name,
+            count(*) value
+        from student
+        group by degree
+        order by value desc
+    </select>
+
+    <select id="countStudentCountData" resultType="top.annieholo.pojo.BarItem">
+        select c.name name, count(s.id) value
+        from clazz c
+        left join student s on s.clazz_id = c.id
+        group by c.id, c.name
+        order by value desc
+    </select>
+
+    <select id="countByClazzId" resultType="java.lang.Integer">
+        select count(*) from student where clazz_id = #{clazzId}
+    </select>
 </mapper>

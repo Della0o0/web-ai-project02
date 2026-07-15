@@ -1,6 +1,7 @@
 package top.annieholo.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import top.annieholo.pojo.BarItem;
 import top.annieholo.pojo.Student;
 import top.annieholo.pojo.StudentQueryParam;
 
@@ -20,4 +21,10 @@ public interface StudentMapper {
     void update(Student student);
 
     void updateViolation(Integer id, Integer score);
+
+    List<BarItem> countStudentDegreeData();
+
+    List<BarItem> countStudentCountData();
+
+    Integer countByClazzId(Integer clazzId);
 }

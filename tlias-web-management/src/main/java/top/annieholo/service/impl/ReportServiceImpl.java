@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.annieholo.mapper.EmpMapper;
+import top.annieholo.mapper.StudentMapper;
 import top.annieholo.pojo.*;
 import top.annieholo.service.ReportService;
 
@@ -16,6 +17,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     EmpMapper empMapper;
+
+    @Autowired
+    StudentMapper studentMapper;
 
     /**
      * 统计员工数量-职位
@@ -49,6 +53,23 @@ public class ReportServiceImpl implements ReportService {
         List<GenderCount> genderCountList = empMapper.countEmpGenderData();
         log.info("统计员工数量-性别genderCountList：{}", genderCountList);
         return genderCountList;
+    }
+
+    @Override
+    public List<BarItem> getStudentDegreeData() {
+        List<BarItem> list = studentMapper.countStudentDegreeData();
+        log.info("统计学员数量-学历：{}", list);
+        return list;
+    }
+
+    @Override
+    public StudentCountData getStudentCountData() {
+        List<BarItem> list = studentMapper.countStudentCountData();
+        List<String> clazzList = list.stream().map(BarItem::getName).toList();
+        List<Integer> dataList = list.stream().map(BarItem::getValue).toList();
+        log.info("统计学员数量-班级clazzList：{}", clazzList);
+        log.info("统计学员数量-班级dataList：{}", dataList);
+        return new StudentCountData(clazzList, dataList);
     }
 
 

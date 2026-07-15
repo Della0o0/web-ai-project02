@@ -33,6 +33,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<Result> handleBusinessException(BusinessException e){
+        log.error("业务异常：{}", e.getMessage());
+        return ResponseEntity.status(HttpStatus.OK).body(Result.error(e.getMessage()));
+    }
+
+    @ExceptionHandler
     public ResponseEntity<Result> handleNoResourceFoundException(NoResourceFoundException e){
         log.error("程序出错啦，找不到接口");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Result.error("接口不存在"));

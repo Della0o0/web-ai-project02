@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.annieholo.exception.BusinessException;
 import top.annieholo.mapper.ClazzMapper;
+import top.annieholo.mapper.StudentMapper;
 import top.annieholo.pojo.Clazz;
 import top.annieholo.pojo.ClazzQueryDTO;
 import top.annieholo.pojo.PageResult;
@@ -19,6 +21,9 @@ public class ClazzServiceImpl implements ClazzService {
 
     @Autowired
     ClazzMapper clazzMapper;
+
+    @Autowired
+    StudentMapper studentMapper;
 
     /**
      * 获取班级列表
@@ -74,6 +79,10 @@ public class ClazzServiceImpl implements ClazzService {
 
     @Override
     public void deleteById(Integer id) {
+        Integer count = studentMapper.countByClazzId(id);
+        if (count > 0) {
+            throw new BusinessException("对不起, 该班级下有学生, 不能直接删除");
+        }
         clazzMapper.deleteById(id);
     }
 }

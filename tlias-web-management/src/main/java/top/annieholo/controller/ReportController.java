@@ -44,6 +44,17 @@ public class ReportController {
         return Result.success(genderCountList);
     }
 
+    @GetMapping("/studentDegreeData")
+    public Result studentDegreeData(){
+        List<BarItem> list = reportService.getStudentDegreeData();
+        return Result.success(list);
+    }
+
+    @GetMapping("/studentCountData")
+    public Result studentCountData(){
+        StudentCountData studentCountData = reportService.getStudentCountData();
+        return Result.success(studentCountData);
+    }
 
 
 }
