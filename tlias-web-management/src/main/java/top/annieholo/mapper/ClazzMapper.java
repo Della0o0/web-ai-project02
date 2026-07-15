@@ -11,6 +11,8 @@ public interface ClazzMapper {
 
     List<Clazz> list(ClazzQueryDTO clazzQueryDTO);
 
+    List<Clazz> listAll();
+
     void insert(Clazz clazz);
 
     Clazz getById(Integer id);

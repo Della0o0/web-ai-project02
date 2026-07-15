@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.annieholo.mapper.StudentMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into student(name, no, gender, phone, id_card, is_college, address, degree, graduation_date, clazz_id, violation_count, violation_score, create_time, update_time)
+        values (#{name}, #{no}, #{gender}, #{phone}, #{idCard}, #{isCollege}, #{address}, #{degree}, #{graduationDate}, #{clazzId}, #{violationCount}, #{violationScore}, #{createTime}, #{updateTime})
+    </insert>
+
+    <delete id="delete">
+        delete from student where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update student
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="no != null and no != ''">no = #{no},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="idCard != null and idCard != ''">id_card = #{idCard},</if>
+            <if test="isCollege != null">is_college = #{isCollege},</if>
+            <if test="clazzId != null">clazz_id = #{clazzId},</if>
+<!--            <if test="address != null">address = #{address},</if>-->
+<!--            <if test="degree != null">degree = #{degree},</if>-->
+<!--            <if test="graduationDate != null">graduation_date = #{graduationDate},</if>-->
+<!--            <if test="violationCount != null">violation_count = #{violationCount},</if>-->
+<!--            <if test="violationScore != null">violation_score = #{violationScore},</if>-->
+            address = #{address},
+            degree = #{degree},
+            graduation_date = #{graduationDate},
+            update_time = #{updateTime}
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateViolation">
+        update student
+        set violation_count = violation_count + 1,
+            violation_score = violation_score + #{score}
+#             update_time = now()
+        where id = #{id}
+    </update>
+
+    <select id="list" resultType="top.annieholo.pojo.Student">
+        select s.*, c.name clazz_name
+        from student s
+        left join clazz c on s.clazz_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                s.name like concat('%', #{name}, '%')
+            </if>
+            <if test="degree != null">
+                and s.degree = #{degree}
+            </if>
+            <if test="clazzId != null">
+                and s.clazz_id = #{clazzId}
+            </if>
+        </where>
+        order by s.update_time desc
+    </select>
+
+    <select id="getById" resultType="top.annieholo.pojo.Student">
+        select s.*, c.name clazz_name
+        from student s
+        left join clazz c on s.clazz_id = c.id
+        where s.id = #{id}
+    </select>
+</mapper>

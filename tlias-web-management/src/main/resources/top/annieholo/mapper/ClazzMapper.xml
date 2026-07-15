@@ -23,7 +23,8 @@
                 subject = #{subject},
             </if>
             room = #{room},
-            master_id = #{masterId}
+            master_id = #{masterId},
+            update_time = #{updateTime}
         </set>
         where id = #{id}
     </update>
@@ -41,6 +42,11 @@
                 and clazz.end_date between #{begin} and #{end}
             </if>
         </where>
+        order by update_time desc
+    </select>
+    <select id="listAll" resultType="top.annieholo.pojo.Clazz">
+        select clazz.*, emp.name master_name
+        from clazz left join emp on master_id = emp.id
         order by update_time desc
     </select>
     <select id="getById" resultType="top.annieholo.pojo.Clazz">
