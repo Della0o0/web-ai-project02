@@ -32,6 +32,16 @@ public class ClazzController {
     }
 
     /**
+     * 获取所有班级列表
+     * @return
+     */
+    @GetMapping("/list")
+    public Result list(){
+        List<Clazz> list = clazzService.list();
+        return Result.success(list);
+    }
+
+    /**
      * 新增班级
      * @param clazz
      * @return
