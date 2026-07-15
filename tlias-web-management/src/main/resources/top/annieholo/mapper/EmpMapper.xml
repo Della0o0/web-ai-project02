@@ -96,4 +96,5 @@
         from emp where emp.deleted = 0 group by gender;
     </select>
 
+
 </mapper>
