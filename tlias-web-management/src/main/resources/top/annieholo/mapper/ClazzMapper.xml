@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.annieholo.mapper.ClazzMapper">
+    <insert id="insert">
+        insert into clazz (name,room, begin_date, end_date, master_id, subject, create_time, update_time)
+        values (#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, #{createTime}, #{updateTime})
+    </insert>
+    <update id="update">
+        update clazz
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="beginDate != null">
+                begin_date = #{beginDate},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate},
+            </if>
+            <if test="subject != null">
+                subject = #{subject},
+            </if>
+            room = #{room},
+            master_id = #{masterId}
+        </set>
+        where id = ${id}
+    </update>
+    <delete id="deleteById">
+        delete from clazz where id = #{id};
+    </delete>
+    <select id="list" resultType="top.annieholo.pojo.Clazz">
+        select clazz.*, emp.name master_name
+        from clazz left join emp on master_id = emp.id
+        <where>
+            <if test="name != null and name != ''">
+                clazz.name like concat('%', #{name}, '%')
+            </if>
+            <if test="begin != null and end != ''">
+                and clazz.end_date between #{begin} and #{end}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+    <select id="getById" resultType="top.annieholo.pojo.Clazz">
+        select * from clazz where id = #{id}
+    </select>
+</mapper>

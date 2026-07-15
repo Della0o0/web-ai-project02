@@ -41,6 +41,7 @@ public class UploadServiceIml implements UploadService {
         String accessKeyId = ossProperties.getAccessKeyId();
         String accessKeySecret = ossProperties.getAccessKeySecret();
 
+        log.info("配置: {}, {}, {}, {}", endpoint, bucketName, accessKeyId, accessKeySecret );
         URL fileUrl = null;
 
         // 当前系统日期的字符串 yyyy/MM
@@ -48,6 +49,7 @@ public class UploadServiceIml implements UploadService {
         // 生成一个不重复的文件名
         String newFileName = UUID.randomUUID().toString() + fileName.substring(fileName.lastIndexOf("."));
         String objectName = dir + "/" + newFileName;
+        log.info("objectName: {}", objectName );
 
         // 创建OSSClient实例。
         // 当OSSClient实例不再使用时，调用shutdown方法以释放资源。

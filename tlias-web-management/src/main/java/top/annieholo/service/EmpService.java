@@ -8,7 +8,7 @@ import top.annieholo.pojo.PageResult;
 import java.util.List;
 
 public interface EmpService {
-    // List<Emp> findAll();
+    List<Emp> getList(EmpQueryParam empQueryParam);
 
     // PageResult<Emp> page(Integer page, Integer pageSize,
     //                      String name, // 姓名

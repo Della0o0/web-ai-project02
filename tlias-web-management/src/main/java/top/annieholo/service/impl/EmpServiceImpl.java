@@ -64,9 +64,23 @@ public class EmpServiceImpl implements EmpService {
     // }
 
     @Override
+    public List<Emp> getList(EmpQueryParam empQueryParam) {
+        List<Emp> list = empMapper.list(empQueryParam);
+        return list;
+    }
+
+    @Override
     public PageResult<Emp> page(EmpQueryParam empQueryParam) {
         PageHelper.startPage(empQueryParam.getPage(), empQueryParam.getPageSize());
         List<Emp> list = empMapper.list(empQueryParam);
+        // 表示把查询得到的员工列表 list 包装成 PageHelper 提供的分页信息对象。
+        // pageInfo.getList();      // 当前页的数据
+        // pageInfo.getTotal();     // 总记录数
+        // pageInfo.getPageNum();   // 当前页码
+        // pageInfo.getPageSize();  // 每页数量
+        // pageInfo.getPages();     // 总页数
+        // pageInfo.isHasNextPage();// 是否有下一页
+        // pageInfo.isHasPreviousPage(); // 是否有上一页
         PageInfo<Emp> empPageInfo = new PageInfo<Emp>(list);
         return new PageResult<Emp>(empPageInfo.getTotal(), empPageInfo.getList());
     }

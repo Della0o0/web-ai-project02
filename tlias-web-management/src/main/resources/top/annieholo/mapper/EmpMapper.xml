@@ -43,11 +43,13 @@
             #{id}
         </foreach>
     </delete>
+<!--    <where> 标签运行时会自动删除开头多余的 AND-->
     <select id="list" resultType="top.annieholo.pojo.Emp">
         select e.*, d.name dept_name from emp e left join dept d on e.dept_id = d.id
         <where>
+            e.deleted = 0
             <if test="name != null and name != ''">
-                e.name like concat('%', #{name} ,'%')
+                and e.name like concat('%', #{name} ,'%')
             </if>
             <if test="gender != null">
                 and e.gender = #{gender}
@@ -55,8 +57,10 @@
             <if test="begin != null and end != null">
                 and e.entry_date between #{begin} and #{end}
             </if>
+            <if test="job != null">
+                and e.job = #{job}
+            </if>
         </where>
-        where deleted = 0
         order by update_time desc
     </select>
     <select id="getById" resultType="top.annieholo.pojo.Emp">

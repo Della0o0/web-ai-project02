@@ -90,4 +90,15 @@ public class EmpController {
         return Result.success();
     }
 
+    /**
+     * 获取列表 - 限制班主任
+     * @return
+     */
+    @GetMapping("/list")
+    public Result getList(){
+        EmpQueryParam param = EmpQueryParam.builder().page(1).pageSize(9999).job(1).build();
+        List<Emp> list = empService.getList(param);
+        return Result.success(list);
+    }
+
 }

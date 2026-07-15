@@ -77,4 +77,5 @@ public interface EmpMapper {
     List<BarItem> countEmpJobDataBar();
 
     List<GenderCount> countEmpGenderData();
+
 }
