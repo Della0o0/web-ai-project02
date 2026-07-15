@@ -25,7 +25,7 @@
             room = #{room},
             master_id = #{masterId}
         </set>
-        where id = ${id}
+        where id = #{id}
     </update>
     <delete id="deleteById">
         delete from clazz where id = #{id};
