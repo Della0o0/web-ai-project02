@@ -12,6 +12,7 @@ import top.annieholo.mapper.EmpExprMapper;
 import top.annieholo.mapper.EmpMapper;
 import top.annieholo.pojo.*;
 import top.annieholo.service.EmpService;
+import top.annieholo.utils.jwt.JwtUtil;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -151,6 +152,23 @@ public class EmpServiceImpl implements EmpService {
         empMapper.update(emp);
         // 2、更新员工经历信息
         updateEmpExprList(emp.getId(), emp.getExprList());
+    }
+
+    /**
+     * 根据用户名和密码查找用户
+     * @param emp
+     * @return
+     */
+    @Override
+    public LoginInfo login(Emp emp) {
+        Emp empRes = empMapper.getUsernameAndPassword(emp);
+        log.info("-----根据用户名和密码查找用户查询数据库中用户是否存在：{}", empRes);
+        if(empRes != null){
+            String token = JwtUtil.generateToken(empRes.getId().toString());
+            return new LoginInfo(empRes.getId(), empRes.getUsername(), empRes.getName(), token);
+            // return new LoginInfo(empRes.getId(), empRes.getName(), empRes.getUsername(), null);
+        }
+        return null;
     }
 
     /**

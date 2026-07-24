@@ -1,9 +1,6 @@
 package top.annieholo.service;
 
-import top.annieholo.pojo.Emp;
-import top.annieholo.pojo.EmpQueryParam;
-import top.annieholo.pojo.JobOption;
-import top.annieholo.pojo.PageResult;
+import top.annieholo.pojo.*;
 
 import java.util.List;
 
@@ -29,4 +26,5 @@ public interface EmpService {
 
     void update(Emp emp);
 
+    LoginInfo login(Emp emp);
 }

@@ -1,6 +1,7 @@
 package top.annieholo.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import top.annieholo.pojo.*;
 
 import java.util.List;
@@ -78,4 +79,6 @@ public interface EmpMapper {
 
     List<GenderCount> countEmpGenderData();
 
+    @Select("select * from emp where username = #{username} and password = #{password}")
+    Emp getUsernameAndPassword(Emp emp);
 }
